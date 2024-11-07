@@ -2,7 +2,7 @@ class Configs:
     DROPOUT = 0.5
     CNN_FILTERS = 100
     CNN_KERNEL_SIZE = 5
-    BiLSTM_UNITS = 100
+    BILSTM_UNITS = 100
     EMBEDDING_DIM = 50
     PRETRAINED_EMBEDDING = True
     EMBEDDING_PATH = 'embeddings/glove.6B.50d.txt'

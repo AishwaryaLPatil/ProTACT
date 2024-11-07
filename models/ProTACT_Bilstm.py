@@ -4,7 +4,7 @@ def build_ProTACT(pos_vocab_size, vocab_size, maxnum, maxlen, readability_featur
     dropout_prob = configs.DROPOUT
     cnn_filters = configs.CNN_FILTERS
     cnn_kernel_size = configs.CNN_KERNEL_SIZE
-    bilstm_units = configs.BiLSTM_UNITS
+    bilstm_units = configs.BILSTM_UNITS
 
     ### 1. Essay Representation
     pos_input = layers.Input(shape=(maxnum * maxlen,), dtype='int32', name='pos_input')
