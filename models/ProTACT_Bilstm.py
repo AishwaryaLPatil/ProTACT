@@ -3,6 +3,7 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 import tensorflow.keras.backend as K
+from tensorflow.keras.layers import Layer
 from custom_layers.zeromasking import ZeroMaskedEntries
 from custom_layers.attention import Attention
 from custom_layers.multiheadattention_pe import MultiHeadAttention_PE
