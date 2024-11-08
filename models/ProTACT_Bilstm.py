@@ -2,7 +2,6 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
-from tensorflow.keras.layers import Layer  # Explicit import for clarity
 import tensorflow.keras.backend as K
 from custom_layers.zeromasking import ZeroMaskedEntries
 from custom_layers.attention import Attention
@@ -113,14 +112,14 @@ def build_ProTACT(pos_vocab_size, vocab_size, maxnum, maxlen, readability_featur
 
         non_target_rep = BooleanMaskLayer()(pos_avg_hz_lstm, mask, axis=-2)
         target_rep = pos_avg_hz_lstm[:, index:index+1]
-        att_attention = layers.Attention()([target_rep, non_target_rep])
+        att_attention = tf.keras.layers.Attention()([target_rep, non_target_rep])
 
         attention_concat = ConcatLayer()([target_rep, att_attention])
-        attention_concat = layers.Flatten()(attention_concat)
-        final_pred = layers.Dense(units=1, activation='sigmoid')(attention_concat)
+        attention_concat = tf.keras.layers.Flatten()(attention_concat)
+        final_pred = tf.keras.layers.Dense(units=1, activation='sigmoid')(attention_concat)
         final_preds.append(final_pred)
 
-    y = layers.Concatenate()(final_preds)
+    y = tf.keras.layers.Concatenate()(final_preds)
 
     model = keras.Model(inputs=[pos_input, prompt_word_input, prompt_pos_input, linguistic_input, readability_input], outputs=y)
     model.compile(loss=total_loss, optimizer='rmsprop')
