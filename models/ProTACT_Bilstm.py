@@ -9,20 +9,21 @@ from custom_layers.attention import Attention
 from custom_layers.multiheadattention_pe import MultiHeadAttention_PE
 from custom_layers.multiheadattention import MultiHeadAttention
 
-class BooleanMaskLayer(Layer):
+class BooleanMaskLayer(tf.keras.layers.Layer):
     def __init__(self, **kwargs):
         super(BooleanMaskLayer, self).__init__(**kwargs)
 
     def call(self, inputs, mask, axis=-2):
         return tf.boolean_mask(inputs, mask, axis=axis)
 
-class ConcatLayer(Layer):
+class ConcatLayer(tf.keras.layers.Layer):
     def __init__(self, **kwargs):
         super(ConcatLayer, self).__init__(**kwargs)
 
     def call(self, inputs):
         target_rep, att_attention = inputs
         return tf.concat([target_rep, att_attention], axis=-1)
+
 
 def correlation_coefficient(trait1, trait2):
     x = trait1
