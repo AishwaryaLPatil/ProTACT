@@ -107,7 +107,10 @@ def build_ProTACT(pos_vocab_size, vocab_size, maxnum, maxlen, readability_featur
                               input_length=maxnum * maxlen, weights=embedding_weights, mask_zero=True)(prompt_word_input)
     prompt_pos = layers.Embedding(output_dim=embedding_dim, input_dim=pos_vocab_size, mask_zero=True)(prompt_pos_input)
     prompt_emb = layers.Add()([prompt, prompt_pos])
-    prompt_zcnn = layers.TimeDistributed(layers.Conv1D(cnn_filters, cnn_kernel_size))(prompt_emb)
+    #prompt_zcnn = layers.TimeDistributed(layers.Conv1D(cnn_filters, cnn_kernel_size))(prompt_emb)
+    cnn_kernel_size = min(cnn_kernel_size, prompt_emb.shape[1])  # Ensure kernel size <= input size
+    prompt_zcnn = layers.TimeDistributed(layers.Conv1D(filters=cnn_filters, kernel_size=cnn_kernel_size))(prompt_emb)
+
     prompt_avg_zcnn = layers.TimeDistributed(Attention())(prompt_zcnn)
 
     prompt_MA_list = MultiHeadAttention(100, num_heads)(prompt_avg_zcnn)
