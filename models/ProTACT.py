@@ -85,16 +85,16 @@ def trait_sim_loss(y_true, y_pred):
     
 def masked_loss_function(y_true, y_pred):
     mask_value = -1
-    #mask = K.cast(K.not_equal(y_true, mask_value), K.floatx())
-    mask = Lambda(lambda x: K.cast(K.not_equal(y_true, mask_value), K.floatx()))
-    mse = keras.losses.MeanSquaredError()
+    # Directly calculate mask as a tensor
+    mask = K.cast(K.not_equal(y_true, mask_value), K.floatx())
+    mse = MeanSquaredError()
     return mse(y_true * mask, y_pred * mask)
 
 def total_loss(y_true, y_pred):
     alpha = 0.7
     mse_loss = masked_loss_function(y_true, y_pred)
-    ts_loss = trait_sim_loss(y_true, y_pred)
-    return alpha * mse_loss + (1-alpha) * ts_loss
+    ts_loss = trait_sim_loss(y_true, y_pred)  
+    return alpha * mse_loss + (1 - alpha) * ts_loss
 
 # def build_ProTACT(pos_vocab_size, vocab_size, maxnum, maxlen, readability_feature_count,
 #               linguistic_feature_count, configs, output_dim, num_heads, embedding_weights):
