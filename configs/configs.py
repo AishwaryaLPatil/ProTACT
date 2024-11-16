@@ -11,6 +11,6 @@ class Configs:
     FEATURES_PATH = 'data/hand_crafted_v3.csv'
     READABILITY_PATH = 'data/allreadability.pickle'
     PROMPT_PATH = 'data/prompt_info_pp.csv'
-    EPOCHS = 50
+    EPOCHS = 5
     BATCH_SIZE = 10
     OUTPUT_PATH = 'outputs/'
