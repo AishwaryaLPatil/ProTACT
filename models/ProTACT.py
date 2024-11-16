@@ -59,7 +59,7 @@ def cosine_sim(trait1, trait2):
 def trait_sim_loss(y_true, y_pred):
     mask_value = -1
     #mask = K.cast(K.not_equal(y_true, mask_value), K.floatx())
-    mask = Lambda(lambda x: K.cast(K.not_equal(x, mask_value), K.floatx()))
+    mask = Lambda(lambda x: K.cast(K.not_equal(y_true, mask_value), K.floatx()))
 
     # masking
     y_trans = tf.transpose(y_true * mask)
@@ -86,7 +86,7 @@ def trait_sim_loss(y_true, y_pred):
 def masked_loss_function(y_true, y_pred):
     mask_value = -1
     #mask = K.cast(K.not_equal(y_true, mask_value), K.floatx())
-    mask = Lambda(lambda x: K.cast(K.not_equal(x, mask_value), K.floatx()))
+    mask = Lambda(lambda x: K.cast(K.not_equal(y_true, mask_value), K.floatx()))
     mse = keras.losses.MeanSquaredError()
     return mse(y_true * mask, y_pred * mask)
 
