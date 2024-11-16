@@ -17,10 +17,10 @@ def correlation_coefficient(trait1, trait2):
     
     # maksing if either x or y is a masked value
     mask_value = -0.
-    #mask_x = K.cast(K.not_equal(x, mask_value), K.floatx())
-    #mask_y = K.cast(K.not_equal(y, mask_value), K.floatx())
-    mask_x = layers.Lambda(lambda x: K.cast(K.not_equal(x, mask_value), K.floatx()))(trait1)
-    mask_y = layers.Lambda(lambda y: K.cast(K.not_equal(y, mask_value), K.floatx()))(trait2)
+    mask_x = K.cast(K.not_equal(x, mask_value), K.floatx())
+    mask_y = K.cast(K.not_equal(y, mask_value), K.floatx())
+    #mask_x = layers.Lambda(lambda x: K.cast(K.not_equal(x, mask_value), K.floatx()))(trait1)
+    #mask_y = layers.Lambda(lambda y: K.cast(K.not_equal(y, mask_value), K.floatx()))(trait2)
 
     mask = mask_x * mask_y
     x_masked, y_masked = x * mask, y * mask
@@ -41,10 +41,10 @@ def cosine_sim(trait1, trait2):
     y = trait2
     
     mask_value = 0.
-    #mask_x = K.cast(K.not_equal(x, mask_value), K.floatx())
-    #mask_y = K.cast(K.not_equal(y, mask_value), K.floatx())
-    mask_x = layers.Lambda(lambda x: K.cast(K.not_equal(x, mask_value), K.floatx()))(trait1)
-    mask_y = layers.Lambda(lambda y: K.cast(K.not_equal(y, mask_value), K.floatx()))(trait2)
+    mask_x = K.cast(K.not_equal(x, mask_value), K.floatx())
+    mask_y = K.cast(K.not_equal(y, mask_value), K.floatx())
+    #mask_x = layers.Lambda(lambda x: K.cast(K.not_equal(x, mask_value), K.floatx()))(trait1)
+    #mask_y = layers.Lambda(lambda y: K.cast(K.not_equal(y, mask_value), K.floatx()))(trait2)
 
 
     mask = mask_x * mask_y
@@ -58,8 +58,8 @@ def cosine_sim(trait1, trait2):
     
 def trait_sim_loss(y_true, y_pred):
     mask_value = -1
-    #mask = K.cast(K.not_equal(y_true, mask_value), K.floatx())
-    mask = layers.Lambda(lambda x: K.cast(K.not_equal(y_true, mask_value), K.floatx()))
+    mask = K.cast(K.not_equal(y_true, mask_value), K.floatx())
+    #mask = layers.Lambda(lambda x: K.cast(K.not_equal(y_true, mask_value), K.floatx()))
 
     # masking
     y_trans = tf.transpose(y_true * mask)
@@ -85,8 +85,8 @@ def trait_sim_loss(y_true, y_pred):
     
 def masked_loss_function(y_true, y_pred):
     mask_value = -1
-    #mask = K.cast(K.not_equal(y_true, mask_value), K.floatx())
-    mask = layers.Lambda(lambda x: K.cast(K.not_equal(y_true, mask_value), K.floatx()))
+    mask = K.cast(K.not_equal(y_true, mask_value), K.floatx())
+    #mask = layers.Lambda(lambda x: K.cast(K.not_equal(y_true, mask_value), K.floatx()))
     mse = keras.losses.MeanSquaredError()
     return mse(y_true * mask, y_pred * mask)
 
